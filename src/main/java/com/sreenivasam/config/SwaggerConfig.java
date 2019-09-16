@@ -20,7 +20,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
           .select()
-          .apis(RequestHandlerSelectors.basePackage("com.pavan.rest.controller"))
+          .apis(RequestHandlerSelectors.basePackage("com.sreenivasam.rest.controller"))
           .paths(PathSelectors.any())
           .build()
           .apiInfo(apiInfo());
@@ -28,7 +28,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "pavan prasad",
+                "sreenivasam",
                 "",
                 "",
                 "Terms of service",
