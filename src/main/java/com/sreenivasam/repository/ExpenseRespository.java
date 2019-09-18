@@ -10,7 +10,7 @@ import com.sreenivasam.modal.Expense;
 
 @Repository
 public interface ExpenseRespository extends JpaRepository<Expense, Long> {
-	public Expense findByName(String name);
+	public Expense findByTitle(String name);
 	
 	@Query(value="from Expense order by createdOn desc")
 	public List<Expense> getExpensesOrderByDateDesc();

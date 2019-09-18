@@ -2,13 +2,13 @@ package com.sreenivasam.service;
 
 import org.springframework.stereotype.Service;
 
-import com.sreenivasam.beans.ApiResponse;
-import com.sreenivasam.modal.User;
+import com.sreenivasam.beans.UserBean;
+import com.sreenivasam.util.ApiResponse;
 
 @Service
 public interface UserService {
 
-	public ApiResponse saveUser(User user);
+	public ApiResponse saveUser(UserBean userBean);
 
 	public ApiResponse getUsers();
 

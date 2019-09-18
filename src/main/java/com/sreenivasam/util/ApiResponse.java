@@ -1,4 +1,4 @@
-package com.sreenivasam.beans;
+package com.sreenivasam.util;
 
 import java.io.Serializable;
 

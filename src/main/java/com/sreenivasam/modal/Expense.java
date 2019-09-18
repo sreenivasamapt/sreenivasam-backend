@@ -21,8 +21,8 @@ public class Expense  extends BaseEntity{
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NAME")
-	private String name;
+	@Column(name = "TITLE")
+	private String title;
 
 	@Column(name = "AMOUNT")
 	private Float amount;

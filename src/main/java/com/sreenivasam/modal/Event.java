@@ -1,8 +1,8 @@
 package com.sreenivasam.modal;
 
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -20,30 +19,28 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_user")
-public class User extends BaseEntity {
+@Table(name = "t_event")
+public class Event extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "FLAT_ID")
-	private Flat flat;
+	@Column(name = "TYPE")
+	private String type;
 
-	@Column(name = "OWNER")
-	private Boolean owner;
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @JoinColumn(name = "USER_ID")
+	private User user;
 
-	@Column(name = "NAME")
-	private String name;
+	@Column(name = "DESC")
+	private String description;
 
-	@Column(name = "Gender")
-	private String gender;
+	@Column(name = "EVENT_DATE")
+	private Date eventDate;
 
-	@Column(name = "DOB")
-	private Date dob;
+	@Column(name = "IMAGE_PATH")
+	private String imagePath;
 
-	@OneToMany(fetch = FetchType.LAZY, targetEntity=Event.class,mappedBy = "user")
-	private List<Event> events;
 }

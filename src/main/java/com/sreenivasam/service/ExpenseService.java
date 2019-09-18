@@ -2,13 +2,13 @@ package com.sreenivasam.service;
 
 import org.springframework.stereotype.Service;
 
-import com.sreenivasam.beans.ApiResponse;
-import com.sreenivasam.modal.Expense;
+import com.sreenivasam.beans.ExpenseBean;
+import com.sreenivasam.util.ApiResponse;
 
 @Service
 public interface ExpenseService {
 
-	public ApiResponse saveExpense(Expense expense);
+	public ApiResponse saveExpense(ExpenseBean expenseBean);
 
 	public ApiResponse getExpenses();
 

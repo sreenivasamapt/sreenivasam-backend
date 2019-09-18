@@ -13,17 +13,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_bank")
-public class Bank extends BaseEntity{
+@Table(name = "t_flat")
+public class Flat extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NAME")
-	private String name;
+	@Column(name = "FLOOR")
+	private Integer floor;
 
-	@Column(name = "BALANCE")
-	private Float balance;
+	@Column(name = "FLAT_NO")
+	private Integer flatNo;
+
+	@Column(name = "VACANCY")
+	private Boolean vacancy;
+	
 }

@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.sreenivasam.beans.ApiResponse;
+import com.sreenivasam.beans.ExpenseBean;
 import com.sreenivasam.modal.Expense;
 import com.sreenivasam.repository.ExpenseRespository;
 import com.sreenivasam.service.ExpenseService;
+import com.sreenivasam.util.ApiResponse;
 import com.sreenivasam.util.Utility;
 
 @Service
@@ -42,16 +43,24 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public ApiResponse saveExpense(Expense expense) {
-		Expense c = expenseRepository.findByName(expense.getName());
+	public ApiResponse saveExpense(ExpenseBean expenseBean) {
+		
+		Expense expense = new Expense();
+		if (expenseBean.getId() != null) {
+			expense.setId(expenseBean.getId());
+		}
+		expense.setTitle(expenseBean.getTitle());
+		expense.setAmount(expenseBean.getAmount());
+		
+		Expense c = expenseRepository.findByTitle(expenseBean.getTitle());
 
 		if (c != null) {
-			if ((expense.getId() == null) || (expense.getId() != c.getId())) {
+			if ((expenseBean.getId() == null) || (expenseBean.getId() != c.getId())) {
 				return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Expense Name Already Exists", null);
 			}
 		}
 
-		if (expense.getId() == null || expense.getId() == 0) {
+		if (expenseBean.getId() == null || expenseBean.getId() == 0) {
 			message = "Expense saved successfully";
 		} else {
 			message = "Expense updated successfully";

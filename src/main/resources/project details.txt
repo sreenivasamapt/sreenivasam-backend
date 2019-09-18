@@ -1,0 +1,16 @@
+		t_flat					
+id	floor	flat no	 vacancy		
+1	1	     101	  FALSE		
+					
+		t_user					
+id	flat_id	is_owner	name	gender dob	
+1	1	     TRUE	   suresh	male   16/09/1987	
+					
+		t_event					
+id	type	desc	       user_id	event_date	    image
+1	bithday	happy birthday	1	    16/09/1987	image_path
+
+		t_expense
+id		desc			time	
+1		happy birthday	16/09/1987	
+

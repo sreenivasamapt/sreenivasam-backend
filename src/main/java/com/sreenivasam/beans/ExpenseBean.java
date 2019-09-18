@@ -5,8 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ExpenseBean {
+public class ExpenseBean extends BaseBean{
+
 	private Long id;
-	private String name;
+
+	private String title;
+
 	private Float amount;
 }

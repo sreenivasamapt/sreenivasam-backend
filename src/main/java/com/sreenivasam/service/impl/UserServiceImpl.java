@@ -1,5 +1,6 @@
 package com.sreenivasam.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.sreenivasam.beans.ApiResponse;
 import com.sreenivasam.beans.UserBean;
 import com.sreenivasam.modal.User;
+import com.sreenivasam.repository.FlatRespository;
 import com.sreenivasam.repository.UserRespository;
 import com.sreenivasam.service.UserService;
+import com.sreenivasam.util.ApiResponse;
 import com.sreenivasam.util.Utility;
 
 @Service
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRespository usersRepository;
+	
+	@Autowired
+	FlatRespository flatRepository;
 
 	private String message = "";
 
@@ -43,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
 			userBean.setId(user.getId());
 			userBean.setName(user.getName());
-			userBean.setFlatNo(user.getFlatNo());
+			userBean.setFlatNo(user.getFlat().getFlatNo());
 			userBean.setGender(user.getGender());
 			userBean.setDobStr(Utility.yyyy_MM_dd.format(user.getDob()));
 
@@ -56,7 +61,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ApiResponse saveUser(User user) {
+	public ApiResponse saveUser(UserBean userBean) {
+		
+		User user = new User();
+		if (userBean.getId() != null) {
+			user.setId(userBean.getId());
+		}
+		user.setName(userBean.getName());
+		user.setFlat(flatRepository.getOne(userBean.getFlatId()));
+		user.setGender(userBean.getGender());
+		try {
+			user.setDob(Utility.yyyy_MM_dd.parse(userBean.getDobStr()));
+		} catch (ParseException e) {
+			return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage(),null);
+		}
 
 		if (user.getId() == null || user.getId() == 0) {
 			message = "User saved successfully";

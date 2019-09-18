@@ -10,40 +10,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sreenivasam.beans.UserBean;
-import com.sreenivasam.service.UserService;
+import com.sreenivasam.beans.EventBean;
+import com.sreenivasam.service.EventService;
 import com.sreenivasam.util.ApiResponse;
 
 @RestController
-@RequestMapping(path = "/api/users")
+@RequestMapping(path = "/api/event")
 @CrossOrigin("*")
-public class UserRestController {
+public class EventRestController {
 
 	@Autowired
-	private UserService userService;
-	
+	private EventService eventService;
+
 	@PostMapping
-	public ApiResponse saveUser(@RequestBody(required = true) UserBean userBean) {
-		return userService.saveUser(userBean);
+	public ApiResponse saveEvent(@RequestBody(required = true) EventBean eventBean) {
+		return eventService.saveEvent(eventBean);
 	}
 
 	@GetMapping
-	public ApiResponse users() {
-		return userService.getUsers();
+	public ApiResponse events() {
+		return eventService.getEvents();
 	}
 
 	@GetMapping("/{id}")
-	public ApiResponse getUser(@PathVariable(value = "id") Long id) {
-		return userService.getUser(id);
+	public ApiResponse getEvent(@PathVariable(value = "id") Long id) {
+		return eventService.getEvent(id);
 	}
 
 	@DeleteMapping("/{id}")
-	public ApiResponse deleteUser(@PathVariable(value = "id") Long id) {
-		return userService.deleteUser(id);
+	public ApiResponse deleteEvent(@PathVariable(value = "id") Long id) {
+		return eventService.deleteEvent(id);
 	}
-	
+
 	@DeleteMapping()
-	public ApiResponse deleteUsers() {
-		return userService.deleteUsers();
+	public ApiResponse deleteEvents() {
+		return eventService.deleteEvents();
 	}
 }
