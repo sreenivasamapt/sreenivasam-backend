@@ -34,7 +34,7 @@ public class Event extends BaseEntity {
     @JoinColumn(name = "USER_ID")
 	private User user;
 
-	@Column(name = "DESC")
+	@Column(name = "DESCRIPTION")
 	private String description;
 
 	@Column(name = "EVENT_DATE")
