@@ -17,7 +17,7 @@ import com.sreenivasam.util.ApiResponse;
 @RestController
 @RequestMapping(path = "/api/flat")
 @CrossOrigin("*")
-public class FlatRestController {
+public class FlatController {
 
 	@Autowired
 	private FlatService flatService;

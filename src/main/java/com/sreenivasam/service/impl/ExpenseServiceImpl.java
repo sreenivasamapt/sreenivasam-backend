@@ -26,48 +26,61 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public ApiResponse getExpenses() {
-		Map<String,Object> data=new LinkedHashMap<>();
-		
-		List<Expense> expenses=expenseRepository.findAll();
-		
+		Map<String, Object> data = new LinkedHashMap<>();
+
+		List<Expense> expenses = expenseRepository.findAll();
+
 		if (Utility.isEmpty(expenses)) {
 			return new ApiResponse(HttpStatus.NOT_FOUND, "No data found", null);
 		}
-		
+
 		Float totalExpenses = expenseRepository.getTotalExpenseAmount();
-		
-		data.put("expenses",expenses);
-		data.put("totalExpenses",totalExpenses);
-		
-		return new ApiResponse(HttpStatus.OK, null,data);
+
+		data.put("expenses", expenses);
+		data.put("totalExpenses", totalExpenses);
+
+		return new ApiResponse(HttpStatus.OK, null, data);
 	}
 
 	@Override
-	public ApiResponse saveExpense(ExpenseBean expenseBean) {
-		
+	public void saveExpense(ExpenseBean expenseBean) throws Exception {
+
+		if (!validData(expenseBean)) {
+			throw new Exception(message);
+		}
+
 		Expense expense = new Expense();
 		if (expenseBean.getId() != null) {
 			expense.setId(expenseBean.getId());
 		}
 		expense.setTitle(expenseBean.getTitle());
 		expense.setAmount(expenseBean.getAmount());
-		
-		Expense c = expenseRepository.findByTitle(expenseBean.getTitle());
+
+		Expense c = expenseRepository.findByTitle(expense.getTitle());
 
 		if (c != null) {
-			if ((expenseBean.getId() == null) || (expenseBean.getId() != c.getId())) {
-				return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Expense Name Already Exists", null);
+			if ((expense.getId() == null) || (expense.getId() != c.getId())) {
+				message = "Expense Name Already Exists";
+				throw new Exception(message);
 			}
 		}
 
-		if (expenseBean.getId() == null || expenseBean.getId() == 0) {
-			message = "Expense saved successfully";
-		} else {
-			message = "Expense updated successfully";
-		}
 		expenseRepository.save(expense);
+	}
 
-		return new ApiResponse(HttpStatus.OK, message, null);
+	private boolean validData(ExpenseBean bean) {
+
+		if (Utility.isEmpty(bean.getTitle())) {
+			message = "Please Enter Name";
+			return false;
+		}
+
+		if (bean.getAmount() == null) {
+			message = "Please Enter Amount";
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

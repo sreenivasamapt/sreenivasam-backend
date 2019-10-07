@@ -64,6 +64,10 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public ApiResponse saveEvent(EventBean eventBean) {
 		
+		if(!isValidEvent(eventBean)) {
+			return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, message, null);
+		}
+		
 		Event event = new Event();
 		if (eventBean.getId() != null) {
 			event.setId(eventBean.getId());
@@ -89,6 +93,31 @@ public class EventServiceImpl implements EventService {
 		eventRepository.save(event);
 
 		return new ApiResponse(HttpStatus.OK, message, null);
+	}
+	
+	public boolean isValidEvent(EventBean eventBean) {
+		
+		if(Utility.isEmpty(eventBean.getType())) {
+			message="Please Enter Event Type";
+			return false;
+		}
+		
+		if(Utility.isEmpty(eventBean.getDescription())) {
+			message="Please Enter Event Description";
+			return false;
+		}
+		
+		if(Utility.isEmpty(eventBean.getEventDateStr())) {
+			message="Please Select Event Date";
+			return false;
+		}
+		
+		if(eventBean.getUserId()==null) {
+			message="Please Select User";
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import com.sreenivasam.util.ApiResponse;
 @Service
 public interface ExpenseService {
 
-	public ApiResponse saveExpense(ExpenseBean expenseBean);
+	public void saveExpense(ExpenseBean expenseBean) throws Exception;
 
 	public ApiResponse getExpenses();
 

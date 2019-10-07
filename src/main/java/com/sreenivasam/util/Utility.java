@@ -27,6 +27,8 @@ public class Utility {
 				return obj == null || Float.valueOf(String.valueOf(obj)) == 0;
 			} else if (obj instanceof Double) {
 				return obj == null || Double.valueOf(String.valueOf(obj)) == 0;
+			} else if (obj instanceof Boolean) {
+				return obj == null;
 			} else {
 				return obj == null;
 			}
@@ -44,8 +46,8 @@ public class Utility {
 
 	public static String getMonthName(Integer month) {
 		String monthName = "";
-		if(month!=null) {
-			monthName=monthNames[month-1];
+		if (month != null) {
+			monthName = monthNames[month - 1];
 		}
 		return monthName;
 	}

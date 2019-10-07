@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRespository usersRepository;
-	
+
 	@Autowired
 	FlatRespository flatRepository;
 
@@ -62,7 +62,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ApiResponse saveUser(UserBean userBean) {
-		
+
+		if (!isValidUser(userBean)) {
+			return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, message, null);
+		}
+
 		User user = new User();
 		if (userBean.getId() != null) {
 			user.setId(userBean.getId());
@@ -73,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			user.setDob(Utility.yyyy_MM_dd.parse(userBean.getDobStr()));
 		} catch (ParseException e) {
-			return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage(),null);
+			return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), null);
 		}
 
 		if (user.getId() == null || user.getId() == 0) {
@@ -84,6 +88,19 @@ public class UserServiceImpl implements UserService {
 		usersRepository.save(user);
 
 		return new ApiResponse(HttpStatus.OK, message, null);
+	}
+
+	public boolean isValidUser(UserBean expenseBean) {
+
+		/*
+		 * if (Utility.isEmpty(expenseBean.getTitle())) { message =
+		 * "Please Enter Title"; return false; }
+		 * 
+		 * if (Utility.isEmpty(expenseBean.getAmount())) { message =
+		 * "Please Enter Amount"; return false; }
+		 */
+
+		return true;
 	}
 
 	@Override

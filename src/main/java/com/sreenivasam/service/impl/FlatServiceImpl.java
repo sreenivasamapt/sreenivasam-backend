@@ -57,6 +57,10 @@ public class FlatServiceImpl implements FlatService {
 	@Override
 	public ApiResponse saveFlat(FlatBean flatBean) {
 
+		if (!isValidFlat(flatBean)) {
+			return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, message, null);
+		}
+
 		Flat flat = new Flat();
 		if (flatBean.getId() != null) {
 			flat.setId(flatBean.getId());
@@ -73,6 +77,26 @@ public class FlatServiceImpl implements FlatService {
 		flatRepository.save(flat);
 
 		return new ApiResponse(HttpStatus.OK, message, null);
+	}
+
+	public boolean isValidFlat(FlatBean expenseBean) {
+
+		if (Utility.isEmpty(expenseBean.getFloor())) {
+			message = "Please Enter Floor";
+			return false;
+		}
+
+		if (Utility.isEmpty(expenseBean.getFlatNo())) {
+			message = "Please Enter Flat No";
+			return false;
+		}
+
+		if (Utility.isEmpty(expenseBean.getVacancy())) {
+			message = "Please Select Vacancy";
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
